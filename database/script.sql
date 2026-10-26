@@ -1,5 +1,3 @@
-
-
 -- BookStore Manager CLI
 
 
@@ -19,7 +17,9 @@ CREATE TABLE clientes (
 CREATE TABLE livros (
     id SERIAL PRIMARY KEY,
     titulo VARCHAR(150) NOT NULL,
-    autor_id INTEGER NOT NULL REFERENCES autores(id)
+    autor_id INTEGER NOT NULL REFERENCES autores(id),
+    quantidade_estoque INTEGER NOT NULL DEFAULT 0,
+    CHECK (quantidade_estoque >= 0)
 );
 
 CREATE TABLE emprestimos (
@@ -51,14 +51,14 @@ VALUES
     ('Pedro Souza', 'pedro@email.com'),
 	('Raul Silva', 'raul@email.com');
 
-INSERT INTO livros (titulo, autor_id)
+INSERT INTO livros (titulo, autor_id, quantidade_estoque)
 VALUES
-    ('Dom Casmurro', 1),
-    ('Harry Potter e a Pedra Filosofal', 2),
-    ('1984', 3),
-	('O Alquimista', 4),
-	('Memórias Póstumas de Brás Cubas', 1),
-	('A Revolução dos Bichos', 3);
+    ('Dom Casmurro', 1, 2),
+    ('Harry Potter e a Pedra Filosofal', 2, 1),
+    ('1984', 3, 2),
+	('O Alquimista', 4, 1),
+	('Memórias Póstumas de Brás Cubas', 1, 1),
+	('A Revolução dos Bichos', 3, 1);
 
 --ano/mes/dia
 INSERT INTO emprestimos (livro_id, cliente_id, data_emprestimo, data_devolucao)
@@ -99,16 +99,22 @@ LIMIT 3;
 -- Relatorio 1: livros disponiveis
 SELECT livros.id,
        livros.titulo,
-       autores.nome AS autor
+       autores.nome AS autor,
+       livros.quantidade_estoque
+        - COUNT(emprestimos.id) AS quantidade_disponivel
 FROM livros
 INNER JOIN autores
     ON livros.autor_id = autores.id
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM emprestimos
-    WHERE emprestimos.livro_id = livros.id
-      AND emprestimos.data_devolucao IS NULL
-)
+LEFT JOIN emprestimos
+    ON emprestimos.livro_id = livros.id
+    AND emprestimos.data_devolucao IS NULL
+GROUP BY
+    livros.id,
+    livros.titulo,
+    autores.nome,
+    livros.quantidade_estoque
+HAVING livros.quantidade_estoque
+        - COUNT(emprestimos.id) > 0
 ORDER BY livros.titulo;
 
 
