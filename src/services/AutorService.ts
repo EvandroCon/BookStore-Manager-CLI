@@ -5,7 +5,7 @@ import { AutorRepository } from "../repositories/AutorRepository";
 export class AutorService {
     constructor(
         private autorRepository: AutorRepository
-    ) {}
+    ) { }
 
     public async listar(): Promise<Autor[]> {
         return await this.autorRepository.listar();
@@ -43,6 +43,7 @@ export class AutorService {
         return autor;
     }
 
+
     public async remover(id: number): Promise<void> {
         const removido = await this.autorRepository.remover(id);
 
@@ -50,4 +51,5 @@ export class AutorService {
             throw new Error("Autor não encontrado.");
         }
     }
+
 }

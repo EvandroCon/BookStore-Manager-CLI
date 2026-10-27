@@ -1,3 +1,4 @@
+
 import * as readline from "readline/promises";
 import { stdin as input, stdout as output } from "process";
 
@@ -5,6 +6,11 @@ import { AutorRepository } from "../repositories/AutorRepository";
 import { AutorService } from "../services/AutorService";
 import { AutorController } from "../controllers/AutorController";
 import { MenuAutores } from "./MenuAutores";
+
+import { ClienteRepository } from "../repositories/ClienteRepository";
+import { ClienteService } from "../services/ClienteService";
+import { ClienteController } from "../controllers/ClienteController";
+import { MenuClientes } from "./MenuClientes";
 
 export class MenuPrincipal {
     private rl = readline.createInterface({
@@ -16,6 +22,11 @@ export class MenuPrincipal {
     private autorService = new AutorService(this.autorRepository);
     private autorController = new AutorController(this.autorService);
     private menuAutores = new MenuAutores(this.rl, this.autorController);
+
+    private clienteRepository = new ClienteRepository();
+    private clienteService = new ClienteService(this.clienteRepository);
+    private clienteController = new ClienteController(this.clienteService);
+    private menuClientes = new MenuClientes(this.rl, this.clienteController);
 
     public async exibir(): Promise<void> {
         let opcao: string = "";
@@ -40,7 +51,7 @@ export class MenuPrincipal {
                     break;
 
                 case "3":
-                    console.log("Menu de clientes sera implementado.");
+                    await this.menuClientes.exibir();
                     break;
 
                 case "4":

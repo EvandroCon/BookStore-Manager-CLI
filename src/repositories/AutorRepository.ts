@@ -13,6 +13,14 @@ export class AutorRepository {
     }
 
     public async cadastrar(nome: string): Promise<Autor> {
+        const autorExistente = this.autores.find(
+            autor => autor.nome.toLowerCase() === nome.toLowerCase()
+        );
+
+        if (autorExistente !== undefined) {
+            throw new Error("Autor já cadastrado.");
+        }
+
         const autor = new Autor(this.proximoId, nome);
 
         this.autores.push(autor);
@@ -20,29 +28,29 @@ export class AutorRepository {
 
         return autor;
     }
-    
-public async atualizar(id: number, nome: string): Promise<Autor | undefined> {
-    const autor = this.autores.find(autor => autor.id === id);
 
-    if (autor === undefined) {
-        return undefined;
+    public async atualizar(id: number, nome: string): Promise<Autor | undefined> {
+        const autor = this.autores.find(autor => autor.id === id);
+
+        if (autor === undefined) {
+            return undefined;
+        }
+
+        autor.nome = nome;
+
+        return autor;
     }
 
-    autor.nome = nome;
+    public async remover(id: number): Promise<boolean> {
+        const indice = this.autores.findIndex(autor => autor.id === id);
 
-    return autor;
-}
+        if (indice === -1) {
+            return false;
+        }
 
-public async remover(id: number): Promise<boolean> {
-    const indice = this.autores.findIndex(autor => autor.id === id);
+        this.autores.splice(indice, 1);
 
-    if (indice === -1) {
-        return false;
+        return true;
     }
-
-    this.autores.splice(indice, 1);
-
-    return true;
-}
 
 }
