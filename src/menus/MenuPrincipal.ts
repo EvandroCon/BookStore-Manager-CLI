@@ -7,6 +7,11 @@ import { AutorService } from "../services/AutorService";
 import { AutorController } from "../controllers/AutorController";
 import { MenuAutores } from "./MenuAutores";
 
+import { LivroRepository } from "../repositories/LivroRepository";
+import { LivroService } from "../services/LivroService";
+import { LivroController } from "../controllers/LivroController";
+import { MenuLivro } from "./MenuLivro";
+
 import { ClienteRepository } from "../repositories/ClienteRepository";
 import { ClienteService } from "../services/ClienteService";
 import { ClienteController } from "../controllers/ClienteController";
@@ -22,6 +27,14 @@ export class MenuPrincipal {
     private autorService = new AutorService(this.autorRepository);
     private autorController = new AutorController(this.autorService);
     private menuAutores = new MenuAutores(this.rl, this.autorController);
+
+    private livroRepository = new LivroRepository();
+    private livroService = new LivroService(
+        this.livroRepository,
+        this.autorRepository
+    );
+    private livroController = new LivroController(this.livroService);
+    private menuLivro = new MenuLivro(this.rl, this.livroController);
 
     private clienteRepository = new ClienteRepository();
     private clienteService = new ClienteService(this.clienteRepository);
@@ -47,7 +60,7 @@ export class MenuPrincipal {
                     break;
 
                 case "2":
-                    console.log("Menu de livros sera implementado.");
+                    await this.menuLivro.exibir();
                     break;
 
                 case "3":
