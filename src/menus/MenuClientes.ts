@@ -1,4 +1,4 @@
-
+import { converterParaIdValido } from "../utils/lerNumero";
 import * as readline from "readline/promises";
 import { ClienteController } from "../controllers/ClienteController";
 
@@ -6,7 +6,7 @@ export class MenuClientes {
     constructor(
         private rl: readline.Interface,
         private clienteController: ClienteController
-    ) {}
+    ) { }
 
     public async exibir(): Promise<void> {
         let opcao: string = "";
@@ -38,9 +38,9 @@ export class MenuClientes {
 
                 case "3": {
                     const idTexto = await this.rl.question("ID do cliente: ");
-                    const id = Number(idTexto);
+                    const id = converterParaIdValido(idTexto);
 
-                    if (!Number.isInteger(id) || id <= 0) {
+                    if (id === undefined) {
                         console.log("ID invalido. Digite um numero inteiro positivo.");
                         break;
                     }
@@ -51,9 +51,9 @@ export class MenuClientes {
 
                 case "4": {
                     const idTexto = await this.rl.question("ID do cliente: ");
-                    const id = Number(idTexto);
+                    const id = converterParaIdValido(idTexto);
 
-                    if (!Number.isInteger(id) || id <= 0) {
+                    if (id === undefined) {
                         console.log("ID invalido. Digite um numero inteiro positivo.");
                         break;
                     }
@@ -67,9 +67,9 @@ export class MenuClientes {
 
                 case "5": {
                     const idTexto = await this.rl.question("ID do cliente: ");
-                    const id = Number(idTexto);
+                    const id = converterParaIdValido(idTexto);
 
-                    if (!Number.isInteger(id) || id <= 0) {
+                    if (id === undefined) {
                         console.log("ID invalido. Digite um numero inteiro positivo.");
                         break;
                     }

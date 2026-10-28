@@ -1,4 +1,4 @@
-
+import { exibirErro } from "../utils/exibirErro";
 import { ClienteService } from "../services/ClienteService";
 
 export class ClienteController {
@@ -21,7 +21,7 @@ export class ClienteController {
                 );
             }
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
@@ -39,14 +39,11 @@ export class ClienteController {
             console.log(`Nome: ${cliente.nome}`);
             console.log(`Email: ${cliente.email}`);
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
-    public async cadastrar(
-        nome: string,
-        email: string
-    ): Promise<void> {
+    public async cadastrar(nome: string, email: string): Promise<void> {
         try {
             const cliente = await this.clienteService.cadastrar(
                 nome,
@@ -58,15 +55,11 @@ export class ClienteController {
             );
             console.log(`ID do cliente: ${cliente.id}`);
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
-    public async atualizar(
-        id: number,
-        nome: string,
-        email: string
-    ): Promise<void> {
+    public async atualizar(id: number, nome: string, email: string): Promise<void> {
         try {
             const cliente = await this.clienteService.atualizar(
                 id,
@@ -81,7 +74,7 @@ export class ClienteController {
 
             console.log("Cliente atualizado com sucesso!");
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
@@ -96,15 +89,7 @@ export class ClienteController {
 
             console.log("Cliente removido com sucesso!");
         } catch (erro: unknown) {
-            this.exibirErro(erro);
-        }
-    }
-
-    private exibirErro(erro: unknown): void {
-        if (erro instanceof Error) {
-            console.error(`Erro: ${erro.message}`);
-        } else {
-            console.error("Ocorreu um erro inesperado.");
+            exibirErro(erro);
         }
     }
 }

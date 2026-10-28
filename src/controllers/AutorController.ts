@@ -1,10 +1,8 @@
-
+import { exibirErro } from "../utils/exibirErro";
 import { AutorService } from "../services/AutorService";
 
 export class AutorController {
-    constructor(
-        private autorService: AutorService
-    ) { }
+    constructor(private autorService: AutorService) { }
 
     public async listar(): Promise<void> {
         try {
@@ -21,21 +19,21 @@ export class AutorController {
                 console.log(`ID: ${autor.id} | Nome: ${autor.nome}`);
             }
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
     public async consultarPorId(id: number): Promise<void> {
-    try {
-        const autor = await this.autorService.buscarPorId(id);
+        try {
+            const autor = await this.autorService.buscarPorId(id);
 
-        console.log("\n===== Autor Encontrado =====");
-        console.log(`ID: ${autor.id}`);
-        console.log(`Nome: ${autor.nome}`);
-    } catch (erro: unknown) {
-        this.exibirErro(erro);
+            console.log("\n===== Autor Encontrado =====");
+            console.log(`ID: ${autor.id}`);
+            console.log(`Nome: ${autor.nome}`);
+        } catch (erro: unknown) {
+            exibirErro(erro);
+        }
     }
-}
 
     public async cadastrar(nome: string): Promise<void> {
         try {
@@ -44,19 +42,19 @@ export class AutorController {
             console.log(`Autor "${autor.nome}" cadastrado com sucesso.`);
             console.log(`ID do autor: ${autor.id}`);
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
     public async atualizar(id: number, nome: string): Promise<void> {
-    try {
-        const autor = await this.autorService.atualizar(id, nome);
+        try {
+            const autor = await this.autorService.atualizar(id, nome);
 
-        console.log(`Autor atualizado com sucesso: ${autor.nome}`);
-    } catch (erro: unknown) {
-        this.exibirErro(erro);
+            console.log(`Autor atualizado com sucesso: ${autor.nome}`);
+        } catch (erro: unknown) {
+            exibirErro(erro);
+        }
     }
-}
 
 
     public async remover(id: number): Promise<void> {
@@ -65,16 +63,8 @@ export class AutorController {
 
             console.log(`Autor com ID ${id} removido com sucesso.`);
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
-
-    private exibirErro(erro: unknown): void {
-        if (erro instanceof Error) {
-            console.error(`Erro: ${erro.message}`);
-        } else {
-            console.error("Ocorreu um erro inesperado.");
-        }
-    }
 }
