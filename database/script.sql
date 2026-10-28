@@ -49,7 +49,7 @@ VALUES
     ('Evandro Conceição', 'evandroc@email.com'),
     ('Maria Santos', 'maria@email.com'),
     ('Pedro Souza', 'pedro@email.com'),
-	('Raul Silva', 'raul@email.com');
+	('Raul Silva', 'raul@email.com'),
 
 INSERT INTO livros (titulo, autor_id, quantidade_estoque)
 VALUES
@@ -89,9 +89,12 @@ SELECT * FROM livros
 ORDER BY titulo
 LIMIT 3;
 
+INSERT INTO clientes (nome, email) 
+VALUES ('Cliente Teste', 'teste@email.com');
 
---DELETE FROM clientes
---WHERE id = 3;
+DELETE FROM clientes 
+WHERE email = 'teste@email.com';
+
 
 
 -- 3. Consultas - Relatórios
