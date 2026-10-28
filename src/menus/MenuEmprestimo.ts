@@ -1,3 +1,4 @@
+import { converterParaIdValido } from "../utils/lerNumero";
 import * as readline from "node:readline/promises";
 import { EmprestimoController } from "../controllers/EmprestimoController";
 
@@ -5,7 +6,7 @@ export class MenuEmprestimos {
     constructor(
         private rl: readline.Interface,
         private emprestimoController: EmprestimoController
-    ) {}
+    ) { }
 
     public async exibir(): Promise<void> {
         let opcao = "";
@@ -66,15 +67,10 @@ export class MenuEmprestimos {
             await this.rl.question("Data do empréstimo (AAAA-MM-DD): ")
         ).trim();
 
-        const livro_id = Number(livroIdTexto);
-        const cliente_id = Number(clienteIdTexto);
+        const livro_id = converterParaIdValido(livroIdTexto);
+        const cliente_id = converterParaIdValido(clienteIdTexto);
 
-        if (
-            !Number.isInteger(livro_id) ||
-            livro_id <= 0 ||
-            !Number.isInteger(cliente_id) ||
-            cliente_id <= 0
-        ) {
+        if (livro_id === undefined || cliente_id === undefined) {
             console.log("Os IDs devem ser números inteiros positivos.");
             return;
         }
@@ -91,9 +87,9 @@ export class MenuEmprestimos {
             "ID do empréstimo que deseja consultar: "
         );
 
-        const id = Number(idTexto);
+        const id = converterParaIdValido(idTexto);
 
-        if (!Number.isInteger(id) || id <= 0) {
+        if (id === undefined) {
             console.log("O ID deve ser um número inteiro positivo.");
             return;
         }
@@ -113,17 +109,14 @@ export class MenuEmprestimos {
             await this.rl.question("Nova data do empréstimo (AAAA-MM-DD): ")
         ).trim();
 
-        const id = Number(idTexto);
-        const livro_id = Number(livroIdTexto);
-        const cliente_id = Number(clienteIdTexto);
+        const id = converterParaIdValido(idTexto);
+        const livro_id = converterParaIdValido(livroIdTexto);
+        const cliente_id = converterParaIdValido(clienteIdTexto);
 
         if (
-            !Number.isInteger(id) ||
-            id <= 0 ||
-            !Number.isInteger(livro_id) ||
-            livro_id <= 0 ||
-            !Number.isInteger(cliente_id) ||
-            cliente_id <= 0
+            id === undefined ||
+            livro_id === undefined ||
+            cliente_id === undefined
         ) {
             console.log("Todos os IDs devem ser números inteiros positivos.");
             return;
@@ -145,9 +138,9 @@ export class MenuEmprestimos {
             await this.rl.question("Data da devolução (AAAA-MM-DD): ")
         ).trim();
 
-        const id = Number(idTexto);
+        const id = converterParaIdValido(idTexto);
 
-        if (!Number.isInteger(id) || id <= 0) {
+        if (id === undefined) {
             console.log("O ID deve ser um número inteiro positivo.");
             return;
         }
@@ -163,9 +156,9 @@ export class MenuEmprestimos {
             "ID do empréstimo que deseja remover: "
         );
 
-        const id = Number(idTexto);
+        const id = converterParaIdValido(idTexto);
 
-        if (!Number.isInteger(id) || id <= 0) {
+        if (id === undefined) {
             console.log("O ID deve ser um número inteiro positivo.");
             return;
         }

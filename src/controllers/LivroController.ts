@@ -1,3 +1,4 @@
+import { exibirErro } from "../utils/exibirErro";
 import { LivroService } from "../services/LivroService";
 
 export class LivroController {
@@ -20,7 +21,7 @@ export class LivroController {
                 );
             }
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
@@ -34,15 +35,11 @@ export class LivroController {
             console.log(`Autor ID: ${livro.autor_id}`);
             console.log(`Estoque: ${livro.quantidade_estoque}`);
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
-    public async cadastrar(
-        titulo: string,
-        autor_id: number,
-        quantidade_estoque: number
-    ): Promise<void> {
+    public async cadastrar(titulo: string, autor_id: number, quantidade_estoque: number): Promise<void> {
         try {
             const livro = await this.livroService.cadastrar(
                 titulo,
@@ -53,16 +50,11 @@ export class LivroController {
             console.log(`Livro "${livro.titulo}" cadastrado com sucesso!`);
             console.log(`ID do livro: ${livro.id}`);
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
-    public async atualizar(
-        id: number,
-        titulo: string,
-        autor_id: number,
-        quantidade_estoque: number
-    ): Promise<void> {
+    public async atualizar(id: number, titulo: string, autor_id: number, quantidade_estoque: number): Promise<void> {
         try {
             const livro = await this.livroService.atualizar(
                 id,
@@ -73,7 +65,7 @@ export class LivroController {
 
             console.log(`Livro "${livro.titulo}" atualizado com sucesso!`);
         } catch (erro: unknown) {
-            this.exibirErro(erro);
+            exibirErro(erro);
         }
     }
 
@@ -83,15 +75,7 @@ export class LivroController {
 
             console.log("Livro removido com sucesso!");
         } catch (erro: unknown) {
-            this.exibirErro(erro);
-        }
-    }
-
-    private exibirErro(erro: unknown): void {
-        if (erro instanceof Error) {
-            console.error(`Erro: ${erro.message}`);
-        } else {
-            console.error("Ocorreu um erro inesperado.");
+            exibirErro(erro);
         }
     }
 }

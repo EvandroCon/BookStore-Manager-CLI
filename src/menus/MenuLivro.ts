@@ -1,3 +1,4 @@
+import { converterParaIdValido, converterParaInteiroNaoNegativo } from "../utils/lerNumero";
 import * as readline from "readline/promises";
 import { LivroController } from "../controllers/LivroController";
 
@@ -27,19 +28,15 @@ export class MenuLivro {
                     const autorTexto = await this.rl.question("ID do autor: ");
                     const quantidadeTexto = await this.rl.question("Quantidade em estoque (0 se nao houver): ");
 
-                    const autor_id = Number(autorTexto);
-                    const quantidade = Number(quantidadeTexto);
+                    const autor_id = converterParaIdValido(autorTexto);
+                    const quantidade = converterParaInteiroNaoNegativo(quantidadeTexto);
 
-                    if (!Number.isInteger(autor_id) || autor_id <= 0) {
+                    if (autor_id === undefined) {
                         console.log("ID do autor invalido. Digite um numero inteiro positivo.");
                         break;
                     }
 
-                    if (
-                        quantidadeTexto.trim() === "" ||
-                        !Number.isInteger(quantidade) ||
-                        quantidade < 0
-                    ) {
+                    if (quantidade === undefined) {
                         console.log("Estoque invalido. Digite um inteiro maior ou igual a zero.");
                         break;
                     }
@@ -59,9 +56,9 @@ export class MenuLivro {
 
                 case "3": {
                     const idTexto = await this.rl.question("ID do livro: ");
-                    const id = Number(idTexto);
+                    const id = converterParaIdValido(idTexto);
 
-                    if (!Number.isInteger(id) || id <= 0) {
+                    if (id === undefined) {
                         console.log("ID invalido. Digite um numero inteiro positivo.");
                         break;
                     }
@@ -72,9 +69,9 @@ export class MenuLivro {
 
                 case "4": {
                     const idTexto = await this.rl.question("ID do livro: ");
-                    const id = Number(idTexto);
+                    const id = converterParaIdValido(idTexto);
 
-                    if (!Number.isInteger(id) || id <= 0) {
+                    if (id === undefined) {
                         console.log("ID invalido. Digite um numero inteiro positivo.");
                         break;
                     }
@@ -85,19 +82,15 @@ export class MenuLivro {
                         "Nova quantidade em estoque: "
                     );
 
-                    const autor_id = Number(autorTexto);
-                    const quantidade = Number(quantidadeTexto);
+                    const autor_id = converterParaIdValido(autorTexto);
+                    const quantidade = converterParaInteiroNaoNegativo(quantidadeTexto);
 
-                    if (!Number.isInteger(autor_id) || autor_id <= 0) {
+                    if (autor_id === undefined) {
                         console.log("ID do autor invalido. Digite um numero inteiro positivo.");
                         break;
                     }
 
-                    if (
-                        quantidadeTexto.trim() === "" ||
-                        !Number.isInteger(quantidade) ||
-                        quantidade < 0
-                    ) {
+                    if (quantidade === undefined) {
                         console.log("Estoque invalido. Digite um inteiro maior ou igual a zero.");
                         break;
                     }
@@ -113,9 +106,9 @@ export class MenuLivro {
 
                 case "5": {
                     const idTexto = await this.rl.question("ID do livro: ");
-                    const id = Number(idTexto);
+                    const id = converterParaIdValido(idTexto);
 
-                    if (!Number.isInteger(id) || id <= 0) {
+                    if (id === undefined) {
                         console.log("ID invalido. Digite um numero inteiro positivo.");
                         break;
                     }
