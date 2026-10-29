@@ -1,3 +1,5 @@
+import { carregarDadosIniciais } from "../data/seed";
+
 import * as readline from "readline/promises";
 import { stdin as input, stdout as output } from "process";
 
@@ -71,6 +73,14 @@ export class MenuPrincipal {
     );
 
     public async exibir(): Promise<void> {
+        // Carrega os dados iniciais (seed) antes de exibir o menu,
+        await carregarDadosIniciais(
+            this.autorRepository,
+            this.livroRepository,
+            this.clienteRepository,
+            this.emprestimoRepository
+        );
+
         let opcao: string = "";
 
         while (opcao !== "0") {
