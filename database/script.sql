@@ -66,7 +66,7 @@ VALUES
     ('Evandro Conceição', 'evandroc@email.com'),
     ('Maria Santos', 'maria@email.com'),
     ('Pedro Souza', 'pedro@email.com'),
-	('Raul Silva', 'raul@email.com'),
+	('Raul Silva', 'raul@email.com');
 
 INSERT INTO livros (titulo, autor_id, quantidade_estoque)
 VALUES
