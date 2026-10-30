@@ -301,3 +301,8 @@ Evandro Conceição
 
 [https://trello.com/b/3xLeQYVH/bookstore-manager-cli](https://trello.com/b/3xLeQYVH/bookstore-manager-cli)
 
+Link do video:
+https://drive.google.com/file/d/1MSab2HhceQpvUEbaqOw8ILN2SA5pYdZG/view?usp=sharing
+
+Link dos slides:
+https://docs.google.com/presentation/d/1XDN0jdYkfQAoS97ssXap2AfHb3PFeuSwvuQGr-OyzhM/edit?usp=sharing
