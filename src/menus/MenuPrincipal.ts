@@ -1,5 +1,3 @@
-import { carregarDadosIniciais } from "../data/seed";
-
 import * as readline from "readline/promises";
 import { stdin as input, stdout as output } from "process";
 
@@ -29,58 +27,49 @@ export class MenuPrincipal {
         output: output
     });
 
-    private autorRepository = new AutorRepository();
-    private autorService = new AutorService(this.autorRepository);
-    private autorController = new AutorController(this.autorService);
-    private menuAutores = new MenuAutores(
-        this.rl,
-        this.autorController
-    );
+    private menuAutores: MenuAutores;
+    private menuLivro: MenuLivro;
+    private menuClientes: MenuClientes;
+    private menuEmprestimos: MenuEmprestimos;
 
-    private livroRepository = new LivroRepository();
-    private livroService = new LivroService(
-        this.livroRepository,
-        this.autorRepository
-    );
-    private livroController = new LivroController(this.livroService);
-    private menuLivro = new MenuLivro(
-        this.rl,
-        this.livroController
-    );
+    constructor(
+        autorRepository: AutorRepository,
+        livroRepository: LivroRepository,
+        clienteRepository: ClienteRepository,
+        emprestimoRepository: EmprestimoRepository
+    ) {
+        const autorService = new AutorService(autorRepository);
+        const autorController = new AutorController(autorService);
+        this.menuAutores = new MenuAutores(this.rl, autorController);
 
-    private clienteRepository = new ClienteRepository();
-    private clienteService = new ClienteService(this.clienteRepository);
-    private clienteController = new ClienteController(this.clienteService);
-    private menuClientes = new MenuClientes(
-        this.rl,
-        this.clienteController
-    );
+        const livroService = new LivroService(
+            livroRepository,
+            autorRepository
+        );
+        const livroController = new LivroController(livroService);
+        this.menuLivro = new MenuLivro(this.rl, livroController);
 
-    private emprestimoRepository = new EmprestimoRepository();
-    private emprestimoService = new EmprestimoService(
-        this.emprestimoRepository,
-        this.livroRepository,
-        this.clienteRepository
-    );
-    private emprestimoController = new EmprestimoController(
-        this.emprestimoService,
-        this.livroRepository,
-        this.clienteRepository
-    );
-    private menuEmprestimos = new MenuEmprestimos(
-        this.rl,
-        this.emprestimoController
-    );
+        const clienteService = new ClienteService(clienteRepository);
+        const clienteController = new ClienteController(clienteService);
+        this.menuClientes = new MenuClientes(this.rl, clienteController);
+
+        const emprestimoService = new EmprestimoService(
+            emprestimoRepository,
+            livroRepository,
+            clienteRepository
+        );
+        const emprestimoController = new EmprestimoController(
+            emprestimoService,
+            livroRepository,
+            clienteRepository
+        );
+        this.menuEmprestimos = new MenuEmprestimos(
+            this.rl,
+            emprestimoController
+        );
+    }
 
     public async exibir(): Promise<void> {
-        // Carrega os dados iniciais (seed) antes de exibir o menu,
-        await carregarDadosIniciais(
-            this.autorRepository,
-            this.livroRepository,
-            this.clienteRepository,
-            this.emprestimoRepository
-        );
-
         let opcao: string = "";
 
         while (opcao !== "0") {
