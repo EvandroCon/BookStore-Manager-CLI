@@ -120,7 +120,7 @@ npm run build
 
 **Arquitetura do projeto**
 
-Usuario → Menu (navega)→ Controller (lê/mostra no terminal)→ Service (regras de negócio)→ Repository (armazena e recupera)→ Dados em memória (Map)
+Usuario → Menu (navega)→ Controller (lê/mostra no terminal)→ Service (regras de negócio)→ Repository (armazena e recupera)→ Dados em memória (Array)
 
 
 **Funcionalidades implementadas**
